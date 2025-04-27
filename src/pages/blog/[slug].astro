@@ -1,0 +1,304 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// This is a placeholder for dynamic routes
+// In a real site, you would fetch the blog post data based on the slug parameter
+// For this example, I'm providing a dummy post
+
+// Example function to simulate getting post by slug
+function getPostBySlug(slug) {
+  // In a real app, this would fetch data from a CMS or database
+  const posts = {
+    "journey-ngo-to-tech": {
+      title: "My Journey from NGO Management to Tech",
+      date: "2023-06-15",
+      image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      categories: ["Career Change", "Personal"],
+      readTime: 8,
+      content: `
+        <p>After over a decade of working in NGO management, I found myself increasingly drawn to the technical aspects of our digital projects. What started as simple curiosity eventually grew into a full-blown passion that led me to make a significant career transition into software development.</p>
+        
+        <h2>The Spark of Interest</h2>
+        <p>My journey began when our organization needed a new website, but we lacked the budget to hire a professional developer. Volunteering to take on the challenge, I dove into HTML and CSS tutorials, gradually piecing together a simple website. The immediate feedback loop of coding—writing something and seeing it work—was incredibly satisfying in a way that contrasted with the often slow-moving, long-term nature of NGO project outcomes.</p>
+        
+        <p>That first project ignited something in me. I found myself spending evenings and weekends learning more about web development, solving coding challenges, and building small projects. The technical problem-solving provided a different kind of fulfillment than my day job.</p>
+        
+        <h2>Learning While Working</h2>
+        <p>As my skills developed, I began incorporating more technical solutions into our NGO's workflows. I built internal tools to track donor information, automate reporting processes, and visualize program outcomes. These side projects not only improved our organizational efficiency but also gave me practical experience in developing real-world applications.</p>
+        
+        <p>I started taking online courses on platforms like Coursera and Udemy, working through the curriculum of a computer science degree at my own pace. I joined developer communities and found mentors who guided my learning journey.</p>
+        
+        <h2>The Transition</h2>
+        <p>Making the actual transition wasn't easy. There were financial considerations, imposter syndrome to overcome, and the challenge of starting a new career path in my thirties. I began by freelancing on small projects to build a portfolio while still working in my NGO role.</p>
+        
+        <p>Eventually, I took the leap and applied for entry-level development positions, highlighting how my NGO management experience provided valuable soft skills: stakeholder communication, project management, working under constraints, and understanding user needs.</p>
+        
+        <h2>Unexpected Parallels</h2>
+        <p>What surprised me most were the parallels between NGO work and software development. Both fields involve:</p>
+        
+        <ul>
+          <li>Understanding and addressing user needs</li>
+          <li>Working with constraints (budget/resources in NGOs, technical limitations in development)</li>
+          <li>Collaborating across diverse teams</li>
+          <li>Iterative improvement processes</li>
+          <li>Measuring impact and outcomes</li>
+        </ul>
+        
+        <p>These parallels made the transition more natural than I expected. My background in managing complex projects and understanding diverse stakeholder needs proved invaluable in my new role.</p>
+        
+        <h2>Lessons Learned</h2>
+        <p>Throughout this journey, I've learned several valuable lessons:</p>
+        
+        <h3>1. It's never too late to pivot</h3>
+        <p>Age is just a number when it comes to learning new skills. In fact, having prior work experience gives you a unique perspective and additional skills that many traditional entry-level candidates don't have.</p>
+        
+        <h3>2. Transferable skills matter</h3>
+        <p>Don't underestimate how much your previous experience contributes to your new career. Communication, leadership, time management, and problem-solving are universally valuable.</p>
+        
+        <h3>3. Consistent learning compounds</h3>
+        <p>Small, consistent efforts to learn add up dramatically over time. Even just an hour a day of focused learning can transform your capabilities over a year.</p>
+        
+        <h3>4. Community is essential</h3>
+        <p>Finding a supportive community of both learners and experienced professionals made all the difference in my journey.</p>
+        
+        <h2>Looking Forward</h2>
+        <p>Now that I've established myself in the tech industry, I'm excited to combine my two worlds. I'm particularly interested in civic technology and building tools that help mission-driven organizations increase their impact.</p>
+        
+        <p>For anyone considering a similar transition, know that it's challenging but entirely possible. Your unique background isn't a hindrance—it's a competitive advantage that will help you stand out in your new field.</p>
+      `
+    },
+    // Additional posts would be defined here
+  };
+  
+  return posts[slug] || null;
+}
+
+export function getStaticPaths() {
+  // In a real app, this would generate paths for all blog posts
+  // For this example, we're just handling one specific post
+  return [
+    { params: { slug: 'journey-ngo-to-tech' } },
+    // Additional slugs would be added here
+  ];
+}
+
+const { slug } = Astro.params;
+const post = getPostBySlug(slug);
+
+// Format date function
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString('en-US', options);
+}
+
+// If post doesn't exist, this would normally redirect to a 404 page
+if (!post) {
+  return Astro.redirect('/blog');
+}
+---
+
+<Layout title={`${post.title} | Simon Rost's Blog`} description={`Read about ${post.title} on Simon Rost's blog.`}>
+  <article class="blog-post">
+    <div class="container">
+      <div class="post-header fade-in" data-delay="0.1">
+        <div class="post-categories">
+          {post.categories.map(category => (
+            <span class="category">{category}</span>
+          ))}
+        </div>
+        <h1>{post.title}</h1>
+        <div class="post-meta">
+          <span class="post-date">{formatDate(post.date)}</span>
+          <span class="post-divider">•</span>
+          <span class="post-read-time">{post.readTime} min read</span>
+        </div>
+      </div>
+      
+      <div class="post-hero fade-in" data-delay="0.2">
+        <img src={post.image} alt={post.title} />
+      </div>
+      
+      <div class="post-content content fade-in" data-delay="0.3" set:html={post.content} />
+      
+      <div class="post-footer fade-in" data-delay="0.4">
+        <div class="post-share">
+          <span>Share this article:</span>
+          <div class="social-links">
+            <a href={`https://twitter.com/intent/tweet?text=${post.title}&url=${Astro.url}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+            </a>
+            <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${Astro.url}&title=${post.title}`} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${Astro.url}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="post-navigation">
+          <a href="/blog" class="btn btn-outline">← Back to all articles</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .blog-post {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .post-header {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-lg);
+    text-align: center;
+  }
+  
+  .post-categories {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .category {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--color-primary-muted);
+    color: var(--color-primary);
+    border-radius: 4px;
+  }
+  
+  .post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  
+  .post-hero {
+    max-width: 1000px;
+    margin: 0 auto var(--spacing-xl);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 400px;
+  }
+  
+  .post-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .post-content {
+    max-width: 700px;
+    margin: 0 auto var(--spacing-xl);
+  }
+  
+  .post-content h2 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+  }
+  
+  .post-content h3 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+  }
+  
+  .post-content p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.7;
+  }
+  
+  .post-content ul, .post-content ol {
+    margin: var(--spacing-md) 0;
+    padding-left: var(--spacing-lg);
+  }
+  
+  .post-content li {
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .post-content a {
+    text-decoration: underline;
+    text-decoration-color: var(--color-primary);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+  
+  .post-content img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: var(--spacing-lg) 0;
+  }
+  
+  .post-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+  
+  .post-footer {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .post-share {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+  
+  .social-links {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+  
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-quick);
+  }
+  
+  .social-links a:hover {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+  }
+  
+  @media (max-width: 768px) {
+    .post-hero {
+      height: 250px;
+    }
+    
+    .post-footer {
+      flex-direction: column;
+      gap: var(--spacing-lg);
+      text-align: center;
+    }
+    
+    .post-share {
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+  }
+</style>

@@ -1,0 +1,344 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// Example blog posts (normally you would load these from a CMS or data file)
+const posts = [
+  {
+    id: 1,
+    title: "My Journey from NGO Management to Tech",
+    slug: "journey-ngo-to-tech",
+    date: "2023-06-15",
+    excerpt: "Reflections on transitioning from a decade in NGO management to a career in software development. The challenges, learnings, and unexpected parallels between these two worlds.",
+    image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600",
+    categories: ["Career Change", "Personal"],
+    readTime: 8
+  },
+  {
+    id: 2,
+    title: "Building User-Centric Software: Lessons from NGO Work",
+    slug: "user-centric-software-ngo-lessons",
+    date: "2023-08-21",
+    excerpt: "How my experience working with diverse stakeholders in NGOs has shaped my approach to building more inclusive and accessible software solutions.",
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=600",
+    categories: ["UX", "Development"],
+    readTime: 6
+  },
+  {
+    id: 3,
+    title: "Modern CSS Techniques Every Developer Should Know",
+    slug: "modern-css-techniques",
+    date: "2023-10-10",
+    excerpt: "An exploration of powerful CSS features like Grid, Flexbox, Custom Properties, and container queries that have transformed how we build responsive layouts.",
+    image: "https://images.pexels.com/photos/270360/pexels-photo-270360.jpeg?auto=compress&cs=tinysrgb&w=600",
+    categories: ["CSS", "Frontend"],
+    readTime: 10
+  },
+  {
+    id: 4,
+    title: "Leveraging Project Management Skills in Software Development",
+    slug: "project-management-skills-in-development",
+    date: "2023-12-05",
+    excerpt: "How traditional project management techniques can be adapted and applied to improve efficiency and outcomes in software development projects.",
+    image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600",
+    categories: ["Project Management", "Development"],
+    readTime: 7
+  }
+];
+
+// Get unique categories for filtering
+const allCategories = [...new Set(posts.flatMap(post => post.categories))];
+
+// Format date function
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString('en-US', options);
+}
+---
+
+<Layout title="Blog | Simon Rost">
+  <section class="blog-section">
+    <div class="container">
+      <div class="blog-header fade-in" data-delay="0.1">
+        <h1>Blog</h1>
+        <div class="subtitle">Thoughts on technology, career transitions, and development practices</div>
+      </div>
+      
+      <div class="blog-filter fade-in" data-delay="0.2">
+        <div class="filter-options">
+          <button class="filter-btn active" data-filter="all">All Topics</button>
+          {allCategories.map(category => (
+            <button class="filter-btn" data-filter={category}>{category}</button>
+          ))}
+        </div>
+        <div class="search-container">
+          <input type="text" id="blog-search" placeholder="Search articles..." />
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+      </div>
+      
+      <div class="blog-grid">
+        {posts.map((post, index) => (
+          <a href={`/blog/${post.slug}`} class="blog-card fade-in" data-delay={0.3 + index * 0.1} data-categories={post.categories.join(',')}>
+            <div class="blog-image">
+              <img src={post.image} alt={post.title} loading="lazy" />
+              <div class="blog-date">{formatDate(post.date)}</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-categories">
+                {post.categories.map(category => (
+                  <span class="category">{category}</span>
+                ))}
+              </div>
+              <h3>{post.title}</h3>
+              <p>{post.excerpt}</p>
+              <div class="blog-meta">
+                <span class="read-time">{post.readTime} min read</span>
+                <span class="read-more">Read more →</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const blogCards = document.querySelectorAll('.blog-card');
+    const searchInput = document.getElementById('blog-search');
+    
+    // Filter by category
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Update active button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        const filter = button.getAttribute('data-filter');
+        
+        filterPosts(filter, searchInput.value);
+      });
+    });
+    
+    // Search functionality
+    searchInput.addEventListener('input', () => {
+      const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+      filterPosts(activeFilter, searchInput.value);
+    });
+    
+    function filterPosts(category, searchQuery) {
+      searchQuery = searchQuery.toLowerCase();
+      
+      blogCards.forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const excerpt = card.querySelector('p').textContent.toLowerCase();
+        const categories = card.getAttribute('data-categories').split(',');
+        
+        const matchesCategory = category === 'all' || categories.includes(category);
+        const matchesSearch = !searchQuery || title.includes(searchQuery) || excerpt.includes(searchQuery);
+        
+        if (matchesCategory && matchesSearch) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .blog-section {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .blog-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .subtitle {
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .blog-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+  }
+  
+  .filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+  
+  .filter-btn {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all var(--transition-quick);
+  }
+  
+  .filter-btn:hover, .filter-btn.active {
+    background-color: var(--color-primary-muted);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  
+  .search-container {
+    position: relative;
+    width: 250px;
+  }
+  
+  .search-container input {
+    width: 100%;
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    transition: border-color var(--transition-quick);
+  }
+  
+  .search-container input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+  
+  .search-container svg {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+  }
+  
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-lg);
+  }
+  
+  .blog-card {
+    display: block;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px var(--color-card-shadow);
+    background-color: var(--color-card);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  }
+  
+  .blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px var(--color-card-shadow);
+  }
+  
+  .blog-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .blog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+  }
+  
+  .blog-card:hover .blog-image img {
+    transform: scale(1.05);
+  }
+  
+  .blog-date {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background-color: rgba(var(--color-bg-rgb, 255, 255, 255), 0.9);
+    color: var(--color-text);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    backdrop-filter: blur(5px);
+  }
+  
+  .blog-content {
+    padding: var(--spacing-lg);
+  }
+  
+  .blog-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .category {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--color-primary-muted);
+    color: var(--color-primary);
+    border-radius: 4px;
+  }
+  
+  .blog-content h3 {
+    margin-bottom: var(--spacing-sm);
+    transition: color var(--transition-quick);
+  }
+  
+  .blog-card:hover h3 {
+    color: var(--color-primary);
+  }
+  
+  .blog-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-md);
+    font-size: 0.875rem;
+  }
+  
+  .read-time {
+    color: var(--color-text-muted);
+  }
+  
+  .read-more {
+    color: var(--color-primary);
+    transition: transform var(--transition-quick);
+    display: inline-block;
+  }
+  
+  .blog-card:hover .read-more {
+    transform: translateX(5px);
+  }
+  
+  @media (max-width: 768px) {
+    .blog-filter {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .search-container {
+      width: 100%;
+    }
+    
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
