@@ -2,20 +2,97 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Simon Rost | Software Developer">
-  <section class="hero">
+<Layout title="About | Simon Rost">
+  <section class="about-section">
     <div class="container">
-      <div class="business-card">
-        <div class="card-content fade-in" data-delay="0.1">
-          <h1>Simon Rost</h1>
-          <p class="tagline">Software Developer</p>
-          <p class="brief-intro">
-            Former NGO Management Professional transitioning to Tech. 
-            Passionate about creating meaningful digital experiences.
+      <div class="about-header fade-in" data-delay="0.1">
+        <h1>About Me</h1>
+        <div class="subtitle">Making the leap - career change into tech, driven by passion.</div>
+      </div>
+      
+      <div class="about-content">
+        <div class="profile-section fade-in" data-delay="0.2">
+          <div class="profile-image">
+            <img src="/profile_picture_simon_rost.jpg" />
+          </div>
+          
+          <div class="profile-details">
+            <h2>Simon Rost</h2>
+            <p class="job-title">Aspiring Software Developer</p>
+            <div class="social-links">
+              <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                GitHub
+              </a>
+              <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                LinkedIn
+              </a>
+              <a href="mailto:your.email@example.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Email
+              </a>
+            </div>
+            
+          </div>
+          <div class="focus-box">
+            <div class="focus-text">
+              <p class="focus-title">My current focus</p>
+              <p>Python (Intermediate)</p>
+              <p><a href=/projects> Project X</a></p>
+              <p>Learning about Algorithms</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bio-section fade-in" data-delay="0.3">
+          <h3>My Story</h3>
+          <p>
+            At 35, I decided to follow a lifelong passion for technology. After years of working in other fields and raising two kids, I felt a strong desire to transition into a career I truly care about. Despite limited time, I taught myself HTML, CSS, Python, and Git, and soon I'll be able to start a computer science degree in part-time.
           </p>
-          <div class="cta-buttons">
-            <a href="/about" class="btn">About Me</a>
-            <a href="/projects" class="btn btn-outline">View Projects</a>
+          <p>
+            I’m transitioning into tech not just as a career shift, but as a conscious decision to build a future doing something I genuinely care about. I want to wake up excited to work, feel immersed in a field I enjoy, and strive for mastery. I want to show my children what it means to chase your passion and do work that matters to you.
+          </p>
+          <p>
+            My approach is hands-on: I learn by building, writing about what I learn, and sharing my journey. I believe real growth happens when we stop hiding behind perfection and start showing our progress.
+          </p>
+          <p>
+            My ultimate goal is to work in tech as soon as possible, focusing on practical experience, collaboration, and solving real-world problems—while staying connected to the joy and curiosity that brought me here.
+          </p>
+          <p>
+            I strongly believe, that every skill I’ve gained so far (and every skill I'll be learning in the future) has value and can feed into this new direction.
+          </p>
+          <p>For my current and past occupations, feel free to visit my <a href="https://www.linkedin.com/in/simon-rost/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>.
+          </p>
+          
+          <h3>Skills</h3>
+          <div class="skills-grid">
+            <div class="skill-category">
+              <h4>Programming</h4>
+              <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>Python</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h4>Tools</h4>
+              <ul>
+                <li>Git</li>
+                <li>VS Code</li>
+                <li>PyCharm</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h4>Soft Skills</h4>
+              <ul>
+                <li>Management</li>
+                <li>Project Management</li>
+                <li>Team Leadership</li>
+                <li>Strategic Planning</li>
+                <li>Stakeholder Communication</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -24,75 +101,149 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
-  .hero {
-    height: 100vh;
+  .about-section {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .about-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .subtitle {
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .about-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .profile-section {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .profile-image {
+    flex: 0 0 200px;
+  }
+  
+  .profile-image img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: top;
+    height: 200px;
+  }
+  
+  .profile-details {
+    flex: 1;
+  }
+  
+  .job-title {
+    color: var(--color-primary);
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .social-links {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+  }
+  
+  .social-links a {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-text-muted);
+    transition: color var(--transition-quick);
+  }
+  
+  .social-links a:hover {
+    color: var(--color-primary);
+  }
+  
+  .focus-box {
+    border: 1px dashed var(--color-border);
+    width: 30%;
+    min-width: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 var(--spacing-md);
+    flex-direction: column;
+    height: auto;
   }
   
-  .business-card {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: var(--spacing-xl);
-    background-color: var(--color-card);
-    border-radius: 8px;
-    box-shadow: 0 10px 30px var(--color-card-shadow);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .business-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-  }
-  
-  .card-content {
+  .focus-text {
+    font-size: var(--spacing-ssm);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
     text-align: center;
   }
-  
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-xs);
+
+  .focus-text p:first-of-type{
+    font-size: var(--spacing-mmd);
+    font-weight: 900;
   }
-  
-  .tagline {
-    font-size: 1.25rem;
-    color: var(--color-primary);
+    
+  .bio-section h3 {
+    margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
-    font-weight: 500;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-sm);
   }
   
-  .brief-intro {
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-lg);
-    line-height: 1.6;
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
   }
   
-  .cta-buttons {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-md);
+  .skill-category h4 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary);
+  }
+  
+  .skill-category ul {
+    list-style: none;
+  }
+  
+  .skill-category li {
+    margin-bottom: var(--spacing-xs);
+    position: relative;
+    padding-left: var(--spacing-md);
+  }
+  
+  .skill-category li::before {
+    content: "•";
+    color: var(--color-accent);
+    position: absolute;
+    left: 0;
   }
   
   @media (max-width: 768px) {
-    .business-card {
-      padding: var(--spacing-lg);
-    }
-    
-    h1 {
-      font-size: 2rem;
-    }
-    
-    .cta-buttons {
+    .profile-section {
       flex-direction: column;
-      gap: var(--spacing-sm);
+      align-items: center;
+      text-align: center;
+    }
+    
+    .profile-image {
+      flex: 0 0 150px;
+    }
+    
+    .social-links {
+      justify-content: center;
+    }
+    
+    .skills-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

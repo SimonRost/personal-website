@@ -20,7 +20,17 @@ The folders and files are as follows:
 The first draft of this portfolio has been created using AI and modified by Simon Rost.
 
 Main modifications applied inlude:
-    - added own description, text, grafics
+    - added own picture
+    - added custom css
+    - updated the documentation
+
+# Future Plans:
+
+- Replace the example projects, blog posts, contact information and descrition with the actual data.
+- Update the README.md
+- Update meta tags in Layout.astro with descriptions and keywords
+- Fix the "form" in contact.astro to send mail
+- Optimize images and assets for faster loading.
 
 
 # 🧞 Commands

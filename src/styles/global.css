@@ -15,11 +15,13 @@
   
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
+  --spacing-ssm: 0.9rem;
   --spacing-md: 1rem;
+  --spacing-mmd: 1.5rem;
   --spacing-lg: 2rem;
   --spacing-xl: 4rem;
   
-  --container-width: 40rem;
+  --container-width: 80rem;
   --content-width: 60rem;
   
   --transition-quick: 0.15s ease;

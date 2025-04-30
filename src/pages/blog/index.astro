@@ -1,52 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// Example blog posts (normally you would load these from a CMS or data file)
-const posts = [
-  {
-    id: 1,
-    title: "My Journey from NGO Management to Tech",
-    slug: "journey-ngo-to-tech",
-    date: "2023-06-15",
-    excerpt: "Reflections on transitioning from a decade in NGO management to a career in software development. The challenges, learnings, and unexpected parallels between these two worlds.",
-    image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600",
-    categories: ["Career Change", "Personal"],
-    readTime: 8
-  },
-  {
-    id: 2,
-    title: "Building User-Centric Software: Lessons from NGO Work",
-    slug: "user-centric-software-ngo-lessons",
-    date: "2023-08-21",
-    excerpt: "How my experience working with diverse stakeholders in NGOs has shaped my approach to building more inclusive and accessible software solutions.",
-    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=600",
-    categories: ["UX", "Development"],
-    readTime: 6
-  },
-  {
-    id: 3,
-    title: "Modern CSS Techniques Every Developer Should Know",
-    slug: "modern-css-techniques",
-    date: "2023-10-10",
-    excerpt: "An exploration of powerful CSS features like Grid, Flexbox, Custom Properties, and container queries that have transformed how we build responsive layouts.",
-    image: "https://images.pexels.com/photos/270360/pexels-photo-270360.jpeg?auto=compress&cs=tinysrgb&w=600",
-    categories: ["CSS", "Frontend"],
-    readTime: 10
-  },
-  {
-    id: 4,
-    title: "Leveraging Project Management Skills in Software Development",
-    slug: "project-management-skills-in-development",
-    date: "2023-12-05",
-    excerpt: "How traditional project management techniques can be adapted and applied to improve efficiency and outcomes in software development projects.",
-    image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600",
-    categories: ["Project Management", "Development"],
-    readTime: 7
-  }
-];
+// Get all blog posts from the collection
+const posts = await getCollection('blog');
+// Sort by date, newest first
+posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 // Get unique categories for filtering
-const allCategories = [...new Set(posts.flatMap(post => post.categories))];
+const allCategories = [...new Set(posts.flatMap(post => post.data.categories))];
 
 // Format date function
 function formatDate(dateString) {
@@ -78,21 +40,21 @@ function formatDate(dateString) {
       
       <div class="blog-grid">
         {posts.map((post, index) => (
-          <a href={`/blog/${post.slug}`} class="blog-card fade-in" data-delay={0.3 + index * 0.1} data-categories={post.categories.join(',')}>
+          <a href={`/blog/${post.data.slug}`} class="blog-card fade-in" data-delay={0.3 + index * 0.1} data-categories={post.data.categories.join(',')}>
             <div class="blog-image">
-              <img src={post.image} alt={post.title} loading="lazy" />
-              <div class="blog-date">{formatDate(post.date)}</div>
+              <img src={post.data.image} alt={post.data.title} loading="lazy" />
+              <div class="blog-date">{formatDate(post.data.date)}</div>
             </div>
             <div class="blog-content">
               <div class="blog-categories">
-                {post.categories.map(category => (
+                {post.data.categories.map(category => (
                   <span class="category">{category}</span>
                 ))}
               </div>
-              <h3>{post.title}</h3>
-              <p>{post.excerpt}</p>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.excerpt}</p>
               <div class="blog-meta">
-                <span class="read-time">{post.readTime} min read</span>
+                <span class="read-time">{post.data.readTime} min read</span>
                 <span class="read-more">Read more →</span>
               </div>
             </div>
@@ -124,17 +86,19 @@ function formatDate(dateString) {
     
     // Search functionality
     searchInput.addEventListener('input', () => {
-      const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+      const activeFilterElement = document.querySelector('.filter-btn.active');
+      const activeFilter = activeFilterElement ? activeFilterElement.getAttribute('data-filter') : 'all';
       filterPosts(activeFilter, searchInput.value);
     });
     
-    function filterPosts(category, searchQuery) {
+    function filterPosts(category: string, searchQuery: string) {
       searchQuery = searchQuery.toLowerCase();
       
       blogCards.forEach(card => {
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        const excerpt = card.querySelector('p').textContent.toLowerCase();
-        const categories = card.getAttribute('data-categories').split(',');
+        const title = card.querySelector('h3')?.textContent?.toLowerCase() || '';
+        const excerptElement = card.querySelector('p');
+        const excerpt = excerptElement?.textContent?.toLowerCase() || '';
+        const categories = card.getAttribute('data-categories')?.split(',') || [];
         
         const matchesCategory = category === 'all' || categories.includes(category);
         const matchesSearch = !searchQuery || title.includes(searchQuery) || excerpt.includes(searchQuery);
