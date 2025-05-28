@@ -4,40 +4,58 @@ import Layout from '../layouts/Layout.astro';
 // Example projects (normally you would load these from a CMS or data file)
 const projects = [
   {
-    id: 1,
-    title: "E-commerce Platform",
-    description: "A responsive e-commerce platform built with React, Node.js, and MongoDB. Features include user authentication, product filtering, cart functionality, and payment processing.",
-    tags: ["React", "Node.js", "MongoDB", "Express"],
-    image: "https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600",
-    link: "#",
-    github: "https://github.com/yourusername/ecommerce-platform"
+    "id": 1,
+    "title": "QuickNote to Obsidian",
+    "description": "A Python-based utility that allows users to quickly jot down notes and save them directly into Obsidian-compatible Markdown files. Features include customizable save locations and global hotkey support for rapid note-taking.",
+    "tags": ["Python", "Tkinter", "Obsidian", "Productivity"],
+    "image": "https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "link": "#",
+    "github": "https://github.com/SimonRost/quicknote-to-obsidian"
   },
   {
-    id: 2,
-    title: "NGO Management System",
-    description: "A comprehensive management system for NGOs to track projects, donors, and beneficiaries. Includes reporting tools, visualization, and stakeholder communication features.",
-    tags: ["Python", "Django", "PostgreSQL", "Chart.js"],
-    image: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=600",
-    link: "#",
-    github: "https://github.com/yourusername/ngo-management"
+    "id": 2,
+    "title": "Practice: ISS Overhead Alert",
+    "description": "A Python script that notifies users via Telegram when the International Space Station is overhead. Utilizes real-time API data to determine ISS positioning and sends alerts accordingly.",
+    "tags": ["Python", "API Integration", "Telegram Bot", "Astronomy"],
+    "image": "https://images.pexels.com/photos/2448749/pexels-photo-2448749.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "link": "#",
+    "github": "https://github.com/SimonRost/practice-api-iss-alert"
   },
   {
-    id: 3,
-    title: "Weather Dashboard",
-    description: "A weather dashboard that provides real-time weather information, forecasts, and historical data visualization. Built with vanilla JavaScript and a weather API.",
-    tags: ["JavaScript", "HTML", "CSS", "API Integration"],
-    image: "https://images.pexels.com/photos/2448749/pexels-photo-2448749.jpeg?auto=compress&cs=tinysrgb&w=600",
-    link: "#",
-    github: "https://github.com/yourusername/weather-dashboard"
+    "id": 3,
+    "title": "Practice: Tkinter Pomodoro Timer",
+    "description": "A simple Pomodoro timer application built using Python's Tkinter library. Helps users manage their work sessions and breaks to enhance productivity.",
+    "tags": ["Python", "Tkinter", "Productivity", "Time Management"],
+    "image": "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "link": "#",
+    "github": "https://github.com/SimonRost/practice-tkinter-pomodoro-timer"
   },
   {
-    id: 4,
-    title: "Task Management App",
-    description: "A productivity application for managing tasks, projects, and deadlines. Features include drag-and-drop organization, priority setting, and progress tracking.",
-    tags: ["React", "Firebase", "Material UI", "Redux"],
-    image: "https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=600",
-    link: "#",
-    github: "https://github.com/yourusername/task-manager"
+    "id": 4,
+    "title": "Practice: Password Generator",
+    "description": "A desktop application for generating secure passwords. Built with Tkinter, it allows users to customize length and character types for robust password generation.",
+    "tags": ["Python", "Tkinter", "Security", "Utility"],
+    "image": "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "link": "#",
+    "github": "https://github.com/SimonRost/practice-tkinter-password-gen"
+  },
+  {
+    "id": 5,
+    "title": "Practice: Stock Trading Alert",
+    "description": "A Python-based alert system that uses real-time stock data and sends Telegram messages when predefined thresholds are reached. Designed for casual traders monitoring specific stocks.",
+    "tags": ["Python", "API Integration", "Telegram Bot", "Finance"],
+    "image": "https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "link": "#",
+    "github": "https://github.com/SimonRost/practice-api-stock-trading-alert"
+  },
+  {
+    "id": 6,
+    "title": "CS Learning Journey",
+    "description": "A comprehensive repository documenting my journey into computer science. Includes various projects, notes, and resources as I prepare for formal CS studies.",
+    "tags": ["Learning", "Documentation", "Education"],
+    "image": "https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "link": "#",
+    "github": "https://github.com/SimonRost/cs-learning-journey"
   }
 ];
 
@@ -69,10 +87,12 @@ const allTags = [...new Set(projects.flatMap(project => project.tags))];
             <div class="project-content">
               <h3>{project.title}</h3>
               <p>{project.description}</p>
-              <div class="project-tags">
-                {project.tags.map(tag => (
-                  <span class="tag">{tag}</span>
-                ))}
+              <div class="project-bottom">
+                <div class="project-tags">
+                  {project.tags.map(tag => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
               </div>
               <div class="project-links">
                 <a href={project.link} class="btn" target="_blank" rel="noopener noreferrer">View Demo</a>
@@ -86,7 +106,7 @@ const allTags = [...new Set(projects.flatMap(project => project.tags))];
   </section>
 </Layout>
 
-<script>
+<script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
@@ -164,6 +184,9 @@ const allTags = [...new Set(projects.flatMap(project => project.tags))];
   }
   
   .project-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px var(--color-card-shadow);
@@ -179,6 +202,7 @@ const allTags = [...new Set(projects.flatMap(project => project.tags))];
   .project-image {
     height: 200px;
     overflow: hidden;
+    flex-shrink: 0;
   }
   
   .project-image img {
@@ -193,9 +217,18 @@ const allTags = [...new Set(projects.flatMap(project => project.tags))];
   }
   
   .project-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
     padding: var(--spacing-lg);
   }
   
+  .project-bottom {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+  }
+
   .project-content h3 {
     margin-bottom: var(--spacing-sm);
   }
@@ -205,6 +238,7 @@ const allTags = [...new Set(projects.flatMap(project => project.tags))];
     flex-wrap: wrap;
     gap: var(--spacing-xs);
     margin: var(--spacing-md) 0;
+    order: 1;
   }
   
   .tag {
@@ -219,6 +253,8 @@ const allTags = [...new Set(projects.flatMap(project => project.tags))];
     display: flex;
     gap: var(--spacing-sm);
     margin-top: var(--spacing-md);
+    margin-bottom: 0;
+    order: 2;
   }
   
   .project-links .btn {

@@ -49,9 +49,10 @@ const {
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              entry.target.style.animationDelay = `${entry.target.dataset.delay || 0}s`;
-              entry.target.style.animationPlayState = 'running';
-              observer.unobserve(entry.target);
+              const target = entry.target as HTMLElement;
+              target.style.animationDelay = `${target.dataset.delay || 0}s`;
+              target.style.animationPlayState = 'running';
+              observer.unobserve(target);
             }
           });
         }, {
@@ -59,7 +60,7 @@ const {
         });
         
         fadeElements.forEach(element => {
-          element.style.animationPlayState = 'paused';
+          (element as HTMLElement).style.animationPlayState = 'paused';
           observer.observe(element);
         });
       });

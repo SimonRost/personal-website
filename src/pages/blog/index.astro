@@ -5,24 +5,24 @@ import { getCollection } from 'astro:content';
 // Get all blog posts from the collection
 const posts = await getCollection('blog');
 // Sort by date, newest first
-posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+posts.sort((a: any, b: any) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 // Get unique categories for filtering
-const allCategories = [...new Set(posts.flatMap(post => post.data.categories))];
+const allCategories = [...new Set(posts.flatMap((post: any) => post.data.categories))];
 
 // Format date function
-function formatDate(dateString) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+function formatDate(dateString: string) {
+  const options: Intl.DateTimeFormatOptions  = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(dateString).toLocaleDateString('en-US', options);
 }
 ---
 
-<Layout title="Blog | Simon Rost">
+<Layout title="Writing | Simon Rost">
   <section class="blog-section">
     <div class="container">
       <div class="blog-header fade-in" data-delay="0.1">
-        <h1>Blog</h1>
-        <div class="subtitle">Thoughts on technology, career transitions, and development practices</div>
+        <h1>Writing</h1>
+        <div class="subtitle">Thoughts on technology, my learning, and development practices</div>
       </div>
       
       <div class="blog-filter fade-in" data-delay="0.2">
@@ -39,7 +39,7 @@ function formatDate(dateString) {
       </div>
       
       <div class="blog-grid">
-        {posts.map((post, index) => (
+        {posts.map((post: any, index: number) => (
           <a href={`/blog/${post.data.slug}`} class="blog-card fade-in" data-delay={0.3 + index * 0.1} data-categories={post.data.categories.join(',')}>
             <div class="blog-image">
               <img src={post.data.image} alt={post.data.title} loading="lazy" />
@@ -47,7 +47,7 @@ function formatDate(dateString) {
             </div>
             <div class="blog-content">
               <div class="blog-categories">
-                {post.data.categories.map(category => (
+                {post.data.categories.map((category: string) => (
                   <span class="category">{category}</span>
                 ))}
               </div>
@@ -68,9 +68,9 @@ function formatDate(dateString) {
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-btn');
-    const blogCards = document.querySelectorAll('.blog-card');
-    const searchInput = document.getElementById('blog-search');
-    
+    const blogCards = document.querySelectorAll('.blog-card') as NodeListOf<HTMLElement>;
+    const searchInput = document.getElementById('blog-search')as HTMLInputElement | null;
+
     // Filter by category
     filterButtons.forEach(button => {
       button.addEventListener('click', () => {
@@ -80,17 +80,18 @@ function formatDate(dateString) {
         
         const filter = button.getAttribute('data-filter');
         
-        filterPosts(filter, searchInput.value);
+        filterPosts(filter, searchInput?.value ?? '');
       });
     });
     
     // Search functionality
-    searchInput.addEventListener('input', () => {
-      const activeFilterElement = document.querySelector('.filter-btn.active');
-      const activeFilter = activeFilterElement ? activeFilterElement.getAttribute('data-filter') : 'all';
-      filterPosts(activeFilter, searchInput.value);
-    });
-    
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const activeFilterElement = document.querySelector('.filter-btn.active');
+        const activeFilter = (activeFilterElement && activeFilterElement.getAttribute('data-filter')) || 'all';
+        filterPosts(activeFilter, searchInput.value);
+      });
+    }
     function filterPosts(category: string, searchQuery: string) {
       searchQuery = searchQuery.toLowerCase();
       
@@ -104,9 +105,9 @@ function formatDate(dateString) {
         const matchesSearch = !searchQuery || title.includes(searchQuery) || excerpt.includes(searchQuery);
         
         if (matchesCategory && matchesSearch) {
-          card.style.display = 'block';
+          (card as HTMLElement).style.display = 'block';
         } else {
-          card.style.display = 'none';
+          (card as HTMLElement).style.display = 'none';
         }
       });
     }

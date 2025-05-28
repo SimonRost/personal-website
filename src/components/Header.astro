@@ -6,7 +6,7 @@ const currentPath = pathname.slice(1);
 <header class="header">
   <div class="container">
     <div class="header-content">
-      <a href="/" class="logo">SR</a>
+      <a href="/" class="logo">Simon Rost</a>
       
       <nav class="nav">
         <button class="menu-toggle" aria-label="Toggle Menu">
@@ -18,7 +18,7 @@ const currentPath = pathname.slice(1);
         <ul class="nav-links">
           <li><a href="/" class={currentPath === "" ? "active" : ""}>About</a></li>
           <li><a href="/projects" class={currentPath === "projects" ? "active" : ""}>Projects</a></li>
-          <li><a href="/blog" class={currentPath === "blog" ? "active" : ""}>Blog</a></li>
+          <li><a href="/blog" class={currentPath === "writing" ? "active" : ""}>Writing</a></li>
           <li><a href="/contact" class={currentPath === "contact" ? "active" : ""}>Contact</a></li>
         </ul>
       </nav>

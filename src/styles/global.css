@@ -159,6 +159,10 @@ img {
   box-shadow: 0 10px 15px var(--color-card-shadow);
 }
 
+.center {
+  text-align: center;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
