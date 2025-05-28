@@ -5,6 +5,7 @@
 
 The folders and files are as follows:
 
+```text
 /
 ├── public/
 │   └── favicon.svg
@@ -14,23 +15,25 @@ The folders and files are as follows:
 │   └── pages/
 │       └── index.astro
 └── package.json
+```
 
 # Contributors / Credits:
 
-The first draft of this portfolio has been created using AI and modified by Simon Rost.
+The first draft of this portfolio has been created using AI (bolt.new) and has been heavily modified by the author.
 
 Main modifications applied inlude:
     - added own picture
     - added custom css
+    - renamed sections
+    - modified the entire "about me" section
     - updated the documentation
 
 # Future Plans:
 
-- Replace the example projects, blog posts, contact information and descrition with the actual data.
-- Update the README.md
 - Update meta tags in Layout.astro with descriptions and keywords
 - Fix the "form" in contact.astro to send mail
 - Optimize images and assets for faster loading.
+- add fitting pictures to the projects
 
 
 # 🧞 Commands
