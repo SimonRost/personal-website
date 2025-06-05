@@ -1,58 +1,61 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
+import { getLanguageFromUrl, t } from '../../i18n/utils';
 
-// Example projects (normally you would load these from a CMS or data file)
+const currentLang = getLanguageFromUrl(Astro.url);
+
+// Example projects (same data as your original, but with German descriptions)
 const projects = [
   {
     "id": 1,
     "title": "QuickNote to Obsidian",
-    "description": "A Python-based utility that allows users to quickly jot down notes and save them directly into Obsidian-compatible Markdown files. Features include customizable save locations and global hotkey support for rapid note-taking.",
-    "tags": ["Python", "Tkinter", "Obsidian", "Productivity"],
-    "image": "public/Quick Note to Obsidian.png",
+    "description": "Ein Python-basiertes Tool, das es Benutzern ermöglicht, schnell Notizen zu erstellen und sie direkt als Obsidian-kompatible Markdown-Dateien zu speichern. Bietet anpassbare Speicherorte und globale Hotkey-Unterstützung für schnelle Notizen.",
+    "tags": ["Python", "Tkinter", "Obsidian", "Produktivität"],
+    "image": "https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=600",
     "link": "#",
     "github": "https://github.com/SimonRost/quicknote-to-obsidian"
   },
   {
     "id": 2,
-    "title": "Practice: ISS Overhead Alert",
-    "description": "A Python script that notifies users via Telegram when the International Space Station is overhead. Utilizes real-time API data to determine ISS positioning and sends alerts accordingly.",
-    "tags": ["Python", "API Integration", "Telegram Bot", "Astronomy"],
+    "title": "Übung: ISS Overhead Alert",
+    "description": "Ein Python-Skript, das Benutzer über Telegram benachrichtigt, wenn die Internationale Raumstation ISS über ihnen ist. Nutzt Echtzeit-API-Daten zur ISS-Positionsbestimmung und sendet entsprechende Benachrichtigungen.",
+    "tags": ["Python", "API Integration", "Telegram Bot", "Astronomie"],
     "image": "https://images.pexels.com/photos/2448749/pexels-photo-2448749.jpeg?auto=compress&cs=tinysrgb&w=600",
     "link": "#",
     "github": "https://github.com/SimonRost/practice-api-iss-alert"
   },
   {
     "id": 3,
-    "title": "Practice: Pomodoro Timer",
-    "description": "A simple Pomodoro timer application built using Python's Tkinter library. Helps users manage their work sessions and breaks to enhance productivity.",
-    "tags": ["Python", "Tkinter", "Productivity", "Time Management"],
-    "image": "public/Pomodoro-Timer.png",
+    "title": "Übung: Tkinter Pomodoro Timer",
+    "description": "Eine einfache Pomodoro-Timer-Anwendung, erstellt mit Pythons Tkinter-Bibliothek. Hilft Benutzern dabei, ihre Arbeitssitzungen und Pausen zu verwalten, um die Produktivität zu steigern.",
+    "tags": ["Python", "Tkinter", "Produktivität", "Zeitmanagement"],
+    "image": "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=600",
     "link": "#",
     "github": "https://github.com/SimonRost/practice-tkinter-pomodoro-timer"
   },
   {
     "id": 4,
-    "title": "Practice: Password Generator",
-    "description": "A desktop application for generating secure passwords. Built with Tkinter, it allows users to customize length and character types for robust password generation.",
-    "tags": ["Python", "Tkinter", "Security", "Utility"],
+    "title": "Übung: Passwort Generator",
+    "description": "Eine Desktop-Anwendung zur Generierung sicherer Passwörter. Mit Tkinter erstellt, ermöglicht es Benutzern, Länge und Zeichentypen für robuste Passwort-Generierung anzupassen.",
+    "tags": ["Python", "Tkinter", "Sicherheit", "Utility"],
     "image": "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=600",
     "link": "#",
     "github": "https://github.com/SimonRost/practice-tkinter-password-gen"
   },
   {
     "id": 5,
-    "title": "Practice: Stock Trading Alert",
-    "description": "A Python-based alert system that uses real-time stock data and sends Telegram messages when predefined thresholds are reached. Designed for casual traders monitoring specific stocks.",
-    "tags": ["Python", "API Integration", "Telegram Bot", "Finance"],
-    "image": "public/ISS Alert.png",
+    "title": "Übung: Stock Trading Alert",
+    "description": "Ein Python-basiertes Warnsystem, das Echtzeit-Aktiendaten verwendet und Telegram-Nachrichten sendet, wenn vordefinierte Schwellenwerte erreicht werden. Entwickelt für Gelegenheitshändler, die bestimmte Aktien überwachen.",
+    "tags": ["Python", "API Integration", "Telegram Bot", "Finanzen"],
+    "image": "https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=600",
     "link": "#",
     "github": "https://github.com/SimonRost/practice-api-stock-trading-alert"
   },
   {
     "id": 6,
     "title": "CS Learning Journey",
-    "description": "A comprehensive repository documenting my journey into computer science. Includes various projects, notes, and resources as I prepare for formal CS studies.",
-    "tags": ["Learning", "Documentation", "Education"],
+    "description": "Ein umfassendes Repository, das meine Reise in die Informatik dokumentiert. Enthält verschiedene Projekte, Notizen und Ressourcen zur Vorbereitung auf das Informatikstudium.",
+    "tags": ["Lernen", "Dokumentation", "Bildung"],
     "image": "https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600",
     "link": "#",
     "github": "https://github.com/SimonRost/cs-learning-journey"
@@ -63,16 +66,16 @@ const projects = [
 const allTags = [...new Set(projects.flatMap(project => project.tags))];
 ---
 
-<Layout title="Projects | Simon Rost">
+<Layout title={`${t('projects.title', currentLang)} | Simon Rost`}>
   <section class="projects-section">
     <div class="container">
       <div class="projects-header fade-in" data-delay="0.1">
-        <h1>My Projects</h1>
-        <div class="subtitle">A showcase of my software development work</div>
+        <h1>{t('projects.title', currentLang)}</h1>
+        <div class="subtitle">{t('projects.subtitle', currentLang)}</div>
       </div>
       
       <div class="filter-options fade-in" data-delay="0.2">
-        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn active" data-filter="all">{t('projects.all', currentLang)}</button>
         {allTags.map(tag => (
           <button class="filter-btn" data-filter={tag}>{tag}</button>
         ))}
@@ -95,7 +98,7 @@ const allTags = [...new Set(projects.flatMap(project => project.tags))];
                 </div>
               </div>
               <div class="project-links">
-                <a href={project.link} class="btn" target="_blank" rel="noopener noreferrer">View Demo</a>
+                <a href={project.link} class="btn" target="_blank" rel="noopener noreferrer">Demo ansehen</a>
                 <a href={project.github} class="btn btn-outline" target="_blank" rel="noopener noreferrer">GitHub</a>
               </div>
             </div>

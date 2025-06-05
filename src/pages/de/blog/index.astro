@@ -1,46 +1,56 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import Layout from '../../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { getLanguageFromUrl, t } from '../../../i18n/utils';
 
-// Get all blog posts from the collection
-const posts = await getCollection('blog');
+const currentLang = getLanguageFromUrl(Astro.url);
+
+// Get German blog posts if they exist, otherwise fall back to English posts
+let posts;
+try {
+  posts = await getCollection('blog-de');
+} catch (error) {
+  // Fall back to English posts if no German collection exists
+  posts = await getCollection('blog');
+}
+
 // Sort by date, newest first
 posts.sort((a: any, b: any) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 // Get unique categories for filtering
 const allCategories = [...new Set(posts.flatMap((post: any) => post.data.categories))];
 
-// Format date function
+// Format date function for German
 function formatDate(dateString: string) {
   const options: Intl.DateTimeFormatOptions  = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString('en-US', options);
+  return new Date(dateString).toLocaleDateString('de-DE', options);
 }
 ---
 
-<Layout title="Writing | Simon Rost">
+<Layout title={`${t('blog.title', currentLang)} | Simon Rost`}>
   <section class="blog-section">
     <div class="container">
       <div class="blog-header fade-in" data-delay="0.1">
-        <h1>Writing</h1>
-        <div class="subtitle">Thoughts on technology, my learning, and development practices</div>
+        <h1>{t('blog.title', currentLang)}</h1>
+        <div class="subtitle">{t('blog.subtitle', currentLang)}</div>
       </div>
       
       <div class="blog-filter fade-in" data-delay="0.2">
         <div class="filter-options">
-          <button class="filter-btn active" data-filter="all">All Topics</button>
+          <button class="filter-btn active" data-filter="all">{t('blog.allTopics', currentLang)}</button>
           {allCategories.map(category => (
             <button class="filter-btn" data-filter={category}>{category}</button>
           ))}
         </div>
         <div class="search-container">
-          <input type="text" id="blog-search" placeholder="Search articles..." />
+          <input type="text" id="blog-search" placeholder={t('blog.searchPlaceholder', currentLang)} />
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </div>
       </div>
       
       <div class="blog-grid">
         {posts.map((post: any, index: number) => (
-          <a href={`/blog/${post.data.slug}`} class="blog-card fade-in" data-delay={0.3 + index * 0.1} data-categories={post.data.categories.join(',')}>
+          <a href={`/de/blog/${post.data.slug}`} class="blog-card fade-in" data-delay={0.3 + index * 0.1} data-categories={post.data.categories.join(',')}>
             <div class="blog-image">
               <img src={post.data.image} alt={post.data.title} loading="lazy" />
               <div class="blog-date">{formatDate(post.data.date)}</div>
@@ -54,8 +64,8 @@ function formatDate(dateString: string) {
               <h3>{post.data.title}</h3>
               <p>{post.data.excerpt}</p>
               <div class="blog-meta">
-                <span class="read-time">{post.data.readTime} min read</span>
-                <span class="read-more">Read more →</span>
+                <span class="read-time">{post.data.readTime} {t('blog.minRead', currentLang)}</span>
+                <span class="read-more">{t('blog.readMore', currentLang)}</span>
               </div>
             </div>
           </a>

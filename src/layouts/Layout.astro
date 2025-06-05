@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { getLanguageFromUrl } from '../i18n/utils';
 import '../styles/global.css';
 
 interface Props {
@@ -12,10 +13,12 @@ const {
   title = "Simon Rost | Software Developer",
   description = "Personal portfolio of Simon Rost, a software developer transitioning from NGO management to tech."
 } = Astro.props;
+
+const currentLang = getLanguageFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,6 +36,11 @@ const {
     <!-- Add theme-color for browser tabs on mobile -->
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    
+    <!-- Language alternates -->
+    <link rel="alternate" hreflang="en" href={Astro.url.toString().replace('/de', '')} />
+    <link rel="alternate" hreflang="de" href={Astro.url.toString().includes('/de') ? Astro.url.toString() : `${Astro.url.origin}/de${Astro.url.pathname}`} />
+    <link rel="alternate" hreflang="x-default" href={Astro.url.toString().replace('/de', '')} />
   </head>
   <body>
     <Header />

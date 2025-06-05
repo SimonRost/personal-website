@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "about": "About",
+    "projects": "Projects", 
+    "writing": "Writing",
+    "contact": "Contact"
+  },
+  "home": {
+    "title": "About Me",
+    "subtitle": "Transitioning into Computer Science | Self-Taught Dev & CS Student",
+    "jobTitle": "Learning to code | CS Student",
+    "currentFocus": "My current focus",
+    "myStory": "My Story",
+    "skills": "Skills",
+    "programming": "Coding",
+    "tools": "Tools",
+    "softSkills": "Soft Skills"
+  },
+  "projects": {
+    "title": "My Projects",
+    "subtitle": "A showcase of my software development work",
+    "all": "All",
+    "viewDemo": "View Demo",
+    "github": "GitHub"
+  },
+  "blog": {
+    "title": "Writing",
+    "subtitle": "Thoughts on technology, my learning, and development practices",
+    "allTopics": "All Topics",
+    "searchPlaceholder": "Search articles...",
+    "minRead": "min read",
+    "readMore": "Read more →",
+    "backToArticles": "← Back to all articles",
+    "shareArticle": "Share this article:"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "I'm always open to discussing new projects, opportunities, or partnerships.",
+    "email": "Email",
+    "emailDesc": "Feel free to email me about any questions or inquiries.",
+    "github": "GitHub", 
+    "githubDesc": "Check out my code and projects on GitHub.",
+    "linkedin": "LinkedIn",
+    "linkedinDesc": "Connect with me professionally on LinkedIn.",
+    "sendMessage": "Send a Message",
+    "yourName": "Your Name",
+    "yourEmail": "Your Email",
+    "subject": "Subject",
+    "message": "Message",
+    "sendButton": "Send Message"
+  },
+  "footer": {
+    "allRightsReserved": "All rights reserved."
+  },
+  "common": {
+    "readingTime": "{{time}} min read",
+    "loading": "Loading...",
+    "error": "Error"
+  }
+}

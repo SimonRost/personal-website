@@ -1,0 +1,249 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { getLanguageFromUrl, t, localizeUrl } from '../../../i18n/utils';
+
+const currentLang = getLanguageFromUrl(Astro.url);
+
+// Generate paths for all blog posts (both English and German)
+export async function getStaticPaths() {
+  // Get English blog posts
+  const englishPosts = await getCollection('blog');
+  const englishPaths = englishPosts.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry, isGerman: false },
+  }));
+
+  // Try to get German blog posts
+  let germanPaths: any[] = [];
+  try {
+    const germanPosts = await getCollection('blog-de');
+    germanPaths = germanPosts.map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { entry, isGerman: true },
+    }));
+  } catch (error) {
+    // No German posts yet, that's fine
+  }
+
+  return [...englishPaths, ...germanPaths];
+}
+
+// Get the blog post passed as a prop
+const { entry, isGerman } = Astro.props;
+const { Content } = await entry.render();
+
+// Format date function for German
+function formatDate(dateString: string) {
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString('de-DE', options);
+}
+---
+
+<Layout title={`${entry.data.title} | Simon Rost's Blog`} description={entry.data.excerpt}>
+  <article class="blog-post">
+    <div class="container">
+      <div class="post-header fade-in" data-delay="0.1">
+        <div class="post-categories">
+          {entry.data.categories.map((category: string) => (
+            <span class="category">{category}</span>
+          ))}
+        </div>
+        <h1>{entry.data.title}</h1>
+        <div class="post-meta">
+          <span class="post-date">{formatDate(entry.data.date)}</span>
+          <span class="post-divider">•</span>
+          <span class="post-read-time">{entry.data.readTime} {t('blog.minRead', currentLang)}</span>
+        </div>
+      </div>
+      
+      <div class="post-hero fade-in" data-delay="0.2">
+        <img src={entry.data.image} alt={entry.data.title} />
+      </div>
+      
+      <div class="post-content content fade-in" data-delay="0.3">
+        <Content />
+      </div>
+      
+      <div class="post-footer fade-in" data-delay="0.4">
+        <div class="post-share">
+          <span>{t('blog.shareArticle', currentLang)}</span>
+          <div class="social-links">
+            <a href={`https://twitter.com/intent/tweet?text=${entry.data.title}&url=${Astro.url}`} target="_blank" rel="noopener noreferrer" aria-label="Auf Twitter teilen">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+            </a>
+            <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${Astro.url}&title=${entry.data.title}`} target="_blank" rel="noopener noreferrer" aria-label="Auf LinkedIn teilen">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${Astro.url}`} target="_blank" rel="noopener noreferrer" aria-label="Auf Facebook teilen">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="post-navigation">
+          <a href={localizeUrl('/blog', currentLang)} class="btn btn-outline">{t('blog.backToArticles', currentLang)}</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .blog-post {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .post-header {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-lg);
+    text-align: center;
+  }
+  
+  .post-categories {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .category {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--color-primary-muted);
+    color: var(--color-primary);
+    border-radius: 4px;
+  }
+  
+  .post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  
+  .post-hero {
+    max-width: 1000px;
+    margin: 0 auto var(--spacing-xl);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 400px;
+  }
+  
+  .post-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .post-content {
+    max-width: 700px;
+    margin: 0 auto var(--spacing-xl);
+  }
+  
+  .post-content :global(h2) {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+  }
+  
+  .post-content :global(h3) {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+  }
+  
+  .post-content :global(p) {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.7;
+  }
+  
+  .post-content :global(ul), .post-content :global(ol) {
+    margin: var(--spacing-md) 0;
+    padding-left: var(--spacing-lg);
+  }
+  
+  .post-content :global(li) {
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .post-content :global(a) {
+    text-decoration: underline;
+    text-decoration-color: var(--color-primary);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+  
+  .post-content :global(img) {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: var(--spacing-lg) 0;
+  }
+  
+  .post-content :global(blockquote) {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+  
+  .post-footer {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .post-share {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+  
+  .social-links {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+  
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-quick);
+  }
+  
+  .social-links a:hover {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+  }
+  
+  @media (max-width: 768px) {
+    .post-hero {
+      height: 250px;
+    }
+    
+    .post-footer {
+      flex-direction: column;
+      gap: var(--spacing-lg);
+      text-align: center;
+    }
+    
+    .post-share {
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+  }
+</style>

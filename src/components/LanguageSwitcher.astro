@@ -1,0 +1,149 @@
+---
+import { getLanguageFromUrl, localizeUrl } from '../i18n/utils';
+
+const currentLang = getLanguageFromUrl(Astro.url);
+const currentPath = Astro.url.pathname.replace(/^\/de/, '') || '/';
+
+const languages = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' }
+];
+---
+
+<div class="language-switcher">
+  <button class="lang-toggle" aria-label="Switch Language">
+    <span class="current-lang">
+      {languages.find(lang => lang.code === currentLang)?.flag}
+      {languages.find(lang => lang.code === currentLang)?.code.toUpperCase()}
+    </span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6,9 12,15 18,9"></polyline>
+    </svg>
+  </button>
+  
+  <div class="lang-dropdown">
+    {languages.map(lang => (
+      <a 
+        href={localizeUrl(currentPath, lang.code as any)}
+        class={`lang-option ${currentLang === lang.code ? 'active' : ''}`}
+        data-lang={lang.code}
+      >
+        <span class="lang-flag">{lang.flag}</span>
+        <span class="lang-name">{lang.name}</span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.querySelector('.lang-toggle');
+    const dropdown = document.querySelector('.lang-dropdown');
+    
+    toggle?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown?.classList.toggle('show');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      dropdown?.classList.remove('show');
+    });
+    
+    // Prevent closing when clicking inside dropdown
+    dropdown?.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style>
+  .language-switcher {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--color-text);
+    transition: all var(--transition-quick);
+  }
+  
+  .lang-toggle:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-muted);
+  }
+  
+  .current-lang {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .lang-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 150px;
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    box-shadow: 0 4px 6px var(--color-card-shadow);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-quick);
+    z-index: 1000;
+  }
+  
+  .lang-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .lang-option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 0.75rem;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: background-color var(--transition-quick);
+  }
+  
+  .lang-option:hover {
+    background-color: var(--color-primary-muted);
+    color: var(--color-primary);
+  }
+  
+  .lang-option.active {
+    background-color: var(--color-primary-muted);
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+  
+  .lang-flag {
+    font-size: 1.1rem;
+  }
+  
+  .lang-name {
+    font-size: 0.875rem;
+  }
+  
+  @media (max-width: 768px) {
+    .lang-dropdown {
+      right: auto;
+      left: 0;
+    }
+  }
+</style>

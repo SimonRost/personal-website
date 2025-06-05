@@ -1,13 +1,16 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
+import { getLanguageFromUrl, t } from '../../i18n/utils';
+
+const currentLang = getLanguageFromUrl(Astro.url);
 ---
 
-<Layout title="About | Simon Rost" description="Learn about Simon Rost, a software developer transitioning from NGO management to tech.">
+<Layout title={`${t('home.title', currentLang)} | Simon Rost`}>
   <section class="about-section">
     <div class="container">
       <div class="about-header fade-in" data-delay="0.1">
-        <h1>About Me</h1>
-        <div class="subtitle">Transitioning into Computer Science | Self-Taught Dev & CS Student (from Fall 2025)</div>
+        <h1>Über mich</h1>
+        <div class="subtitle">Karriere-Wechsel | Informatik-Student (ab Herbst 2025)</div>
       </div>
       
       <div class="about-content">
@@ -18,7 +21,7 @@ import Layout from '../layouts/Layout.astro';
           
           <div class="profile-details">
             <h2>Simon Rost</h2>
-            <p class="job-title">Learning & Building<br><br><br></p>
+            <p class="job-title">Lernen & Umsetzen<br><br><br></p>
             <div class="social-links">
               <a href="https://github.com/SimonRost" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
@@ -33,31 +36,30 @@ import Layout from '../layouts/Layout.astro';
                 Email
               </a>
             </div>
+            
           </div>
-          
           <div class="focus-box">
             <div class="focus-text">
               <p class="focus-title">My current focus</p>
               <ul class="focus-list">
-                <li>Learning intermediate & advanced Python</li>
-                <li><a href="/projects">Building my portfolio (including website/GitHub)</a></li>
-                <li>Preparing for university</li>
+                <li>Intermediate & advanced Python lernen</li>
+                <li><a href="/projects">Portfolio aufbauen (inkl. Website/GitHub)</a></li>
+                <li>Vorbereitung auf Uni-Start</li>
               </ul>
-              
             </div>
           </div>
         </div>
         
         <div class="bio-section fade-in" data-delay="0.3">
-          <h3>My Story</h3>
+          <h3>{t('home.myStory', currentLang)}</h3>
           <p>
-            At 35, I decided to pursue a lifelong passion for technology. After years of working in other fields and raising two kids, I'm now making a career change that truly matters to me: I'll be starting a **part-time Computer Science degree** in Fall 2025.
+            Mit 35 habe ich mich dazu entschieden, meiner langjährigen Leidenschaft für die Informatik nachzugehen und nochmals in einen neuen Bereich zu starten. Nachdem ich nun einige Jahre in anderen Bereichen unterwegs war und gelernt habe das Familienleben mit zwei kleinen Kindern zu meistern, starte ich jetzt im Herbst ein (Teilzeit-)Informatikstudium.
           </p>
           <p>
-            To learn more about what motivated me to take this step, see: <a href="/blog/making-the-leap" target="_self"><b>"Making the Leap: Why I'm Finally Studying Computer Science."</b></a>
+            Zu meinen Beweggründen gibt es hier mehr Infos: <a href="/de/blog/mit-30+-informatik" target="_self"><b>"Wie ich mit 30+ nochmal Informatik studiere – und warum es sich richtig anfühlt"</b></a>.
           </p>
           <p>
-            Despite limited time, I taught myself during the last few months:
+            Trotz ziemlich knappen Zeitressourcen habe ich mir in den letzten Monaten folgendes Wissen selbst angeeignet:
           </p>
           <p class="center">
             <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
@@ -66,7 +68,11 @@ import Layout from '../layouts/Layout.astro';
             <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
           </p>
           <p>
-            My approach is hands-on: I learn by building and sharing my journey. I believe real growth happens when we stop hiding behind perfection(ism) and start showing our progress. That's why I built this page and why I'm sharing all my learning projects <strong>here</strong> on this Page and <strong>GitHub</strong>.
+            Ich gehe diesen Wechsel bewusst praxisnah an: Ich lerne durch Projekte und teile, wie ich vorankomme.<br>
+            Wirkliches Wachstum beginnt – so sehe ich das –, wenn ich aufhöre, mich hinter einem Perfektionsanspruch zu verstecken, und offen zu zeigen, woran ich arbeite, was ich lerne und wo ich auch mal scheitere.
+          </p>
+          <p>
+            Alle meine Projekte und Projekte zu Lernzwecken sind <strong>hier</strong> oder auf <strong>GitHub</strong> zu finden.
           </p>
           <p class="center">
             <a href="https://github.com/simonrost/cs-learning-journey" target="_blank" rel="noopener noreferrer">
@@ -74,13 +80,13 @@ import Layout from '../layouts/Layout.astro';
             </a>
           </p>
           <p>
-            For my current and past occupations, feel free to visit my <a href="https://www.linkedin.com/in/simon-rost/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>.
+            Für meine aktuellen und vergangenen Tätigkeiten besuchen Sie gerne mein <a href="https://www.linkedin.com/in/simon-rost/" target="_blank" rel="noopener noreferrer">LinkedIn-Profil</a>.
           </p>
           
-          <h3>Skills</h3>
+          <h3>{t('home.skills', currentLang)}</h3>
           <div class="skills-grid">
             <div class="skill-category">
-              <h4>Coding</h4>
+              <h4>{t('home.programming', currentLang)}</h4>
               <ul>
                 <li>HTML</li>
                 <li>CSS</li>
@@ -88,7 +94,7 @@ import Layout from '../layouts/Layout.astro';
               </ul>
             </div>
             <div class="skill-category">
-              <h4>Tools</h4>
+              <h4>{t('home.tools', currentLang)}</h4>
               <ul>
                 <li>Git</li>
                 <li>VS Code</li>
@@ -96,13 +102,13 @@ import Layout from '../layouts/Layout.astro';
               </ul>
             </div>
             <div class="skill-category">
-              <h4>Soft Skills</h4>
+              <h4>{t('home.softSkills', currentLang)}</h4>
               <ul>
                 <li>Management</li>
-                <li>Project Management</li>
-                <li>Team Leadership</li>
-                <li>Strategic Planning</li>
-                <li>Stakeholder Communication</li>
+                <li>Projektmanagement</li>
+                <li>Teamführung</li>
+                <li>Strategische Planung</li>
+                <li>Stakeholder-Kommunikation</li>
               </ul>
             </div>
           </div>

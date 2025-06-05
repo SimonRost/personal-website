@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "about": "Über mich",
+    "projects": "Projekte", 
+    "writing": "Artikel",
+    "contact": "Kontakt"
+  },
+  "home": {
+    "title": "Über mich",
+    "subtitle": "Wechsel zur Informatik | Autodidakt & Informatik-Student",
+    "jobTitle": "Lerne programmieren | Informatik-Student",
+    "currentFocus": "Hier bin ich dran",
+    "myStory": "Meine Story",
+    "skills": "Fähigkeiten",
+    "programming": "Coding",
+    "tools": "Tools",
+    "softSkills": "Soft Skills"
+  },
+  "projects": {
+    "title": "Meine Projekte",
+    "subtitle": "Eine Auswahl meiner Softwareentwicklungsarbeiten",
+    "all": "Alle",
+    "viewDemo": "Demo ansehen",
+    "github": "GitHub"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Gedanken zu Technologie, meinem Lernen und Entwicklungspraktiken",
+    "allTopics": "Alle Themen",
+    "searchPlaceholder": "Artikel suchen...",
+    "minRead": "Min Lesezeit",
+    "readMore": "Weiterlesen →",
+    "backToArticles": "← Zurück zu allen Artikeln",
+    "shareArticle": "Artikel teilen:"
+  },
+  "contact": {
+    "title": "Kontakt aufnehmen",
+    "subtitle": "Ich bin immer offen für Diskussionen über neue Projekte, Möglichkeiten oder Partnerschaften.",
+    "email": "E-Mail",
+    "emailDesc": "Schreiben Sie mir gerne bei Fragen oder Anfragen.",
+    "github": "GitHub", 
+    "githubDesc": "Schauen Sie sich meinen Code und meine Projekte auf GitHub an.",
+    "linkedin": "LinkedIn",
+    "linkedinDesc": "Vernetzen Sie sich beruflich mit mir auf LinkedIn.",
+    "sendMessage": "Nachricht senden",
+    "yourName": "Ihr Name",
+    "yourEmail": "Ihre E-Mail",
+    "subject": "Betreff",
+    "message": "Nachricht",
+    "sendButton": "Nachricht senden"
+  },
+  "footer": {
+    "allRightsReserved": "Alle Rechte vorbehalten."
+  },
+  "common": {
+    "readingTime": "{{time}} Min Lesezeit",
+    "loading": "Laden...",
+    "error": "Fehler"
+  }
+}
